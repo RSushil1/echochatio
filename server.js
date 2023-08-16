@@ -26,7 +26,7 @@ const server = http.createServer(app); // Create HTTP server instance
 
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000',
+    origin: 'https://echochat.vercel.app',
     methods: ['GET', 'POST'],
     allowedHeaders: ['my-custom-header'],
     credentials: true
