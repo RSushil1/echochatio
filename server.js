@@ -23,9 +23,7 @@ app.use(express.json());
 
 
 const server = http.createServer(app); // Create HTTP server instance
-//routes
-app.use("/socket.io", (req, res) => {
-  // Socket.IO configuration
+
 const io = new Server(server, {
   cors: {
     origin: 'http://localhost:3000',
@@ -51,9 +49,6 @@ io.on('connection', socket => {
           });
       });
   });
-});
-
-  io.listen(req, res)
 });
 
 //run listen
