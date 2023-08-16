@@ -14,7 +14,9 @@ const app = express();
 
 //middelwares
 app.use(cors({
-  origin: '*'
+  origin: '*',
+  allowedHeaders: ["my-custom-header"],
+      credentials: true
 }));
 app.use(express.json());
 
