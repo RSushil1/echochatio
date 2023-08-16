@@ -3,9 +3,11 @@ const { Server } = require ("socket.io");
 
 const httpServer = createServer();
 const io = new Server(httpServer, {
-  cors: {
-    origin: "*"
-  }
+    cors: {
+        origin: "*",
+        allowedHeaders: ["my-custom-header"],
+        credentials: true
+      }
 });
 
 
