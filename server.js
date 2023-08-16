@@ -1,9 +1,18 @@
+const { createServer } = require ("http");
+const { Server } = require ("socket.io");
 
-const io = require ('socket.io')(5000)
+const httpServer = createServer();
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*"
+  }
+});
+
 
 io.on('connection', socket => {
     const id = socket.handshake.query.id;
     socket.join(id);
+    console.log(id)
   
     socket.on('send-message', ({ recipients, text }) => {
       recipients.forEach(recipient => {
@@ -17,4 +26,9 @@ io.on('connection', socket => {
         });
       });
     });
+  });
+
+
+  httpServer.listen(5000, () => {
+    console.log('Server Running on port 5000 for socket.io');
   });
