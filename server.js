@@ -14,7 +14,7 @@ const app = express();
 
 //middelwares
 app.use(cors({
-  origin: '*',
+  origin: 'https://echochat.vercel.app',
   allowedHeaders: ["my-custom-header"],
       credentials: true
 }));
@@ -36,7 +36,7 @@ app.use("/api/socket", (req, res) => {
 
   const io = new Server({
     cors: {
-      origin: "*",
+      origin: "https://echochat.vercel.app",
       allowedHeaders: ["my-custom-header"],
       credentials: true
     }
