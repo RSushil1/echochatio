@@ -24,7 +24,7 @@ app.use(express.json());
 
 
 //routes
-app.use("/api/socket", (req, res) => {
+app.use("/socket.io", (req, res) => {
   const { query } = parse(req.url, true);
   const id = query.id;
 
