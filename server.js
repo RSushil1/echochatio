@@ -1,26 +1,28 @@
-const { readFileSync } = require("fs");
-const { createServer } = require("https");
 const { Server } = require("socket.io");
+const { parse } = require('url');
 
-const httpsServer = createServer({
-  key: readFileSync("/path/to/my/key.pem"),
-  cert: readFileSync("/path/to/my/cert.pem")
-});
+module.exports = (req, res) => {
+  const { query } = parse(req.url, true);
+  const id = query.id;
 
-const io = new Server(httpsServer, {
+  if (!id) {
+    res.statusCode = 400;
+    res.end('Missing "id" parameter in the query string');
+    return;
+  }
+
+  const io = new Server({
     cors: {
-        origin: "*",
-        allowedHeaders: ["my-custom-header"],
-        credentials: true
-      }
-});
+      origin: "*",
+      allowedHeaders: ["my-custom-header"],
+      credentials: true
+    }
+  });
 
-
-io.on('connection', socket => {
-    const id = socket.handshake.query.id;
+  io.on('connection', socket => {
     socket.join(id);
-    console.log(id)
-  
+    console.log(id);
+
     socket.on('send-message', ({ recipients, text }) => {
       recipients.forEach(recipient => {
         const newRecipients = recipients.filter(r => r !== recipient);
@@ -35,7 +37,5 @@ io.on('connection', socket => {
     });
   });
 
-
-  httpsServer.listen(5000, () => {
-    console.log('Server Running on port 5000 for socket.io');
-  });
+  io.listen(req, res);
+};
