@@ -1,7 +1,26 @@
+const express= require('express');
 const { Server } = require("socket.io");
 const { parse } = require('url');
+const cors= require("cors");
 
-module.exports = (req, res) => {
+
+//PORT
+const PORT = 5000;
+
+
+//rest object
+const app = express();
+
+
+//middelwares
+app.use(cors());
+app.use(express.json());
+
+
+
+
+//routes
+app.use("/api/socket", (req, res) => {
   const { query } = parse(req.url, true);
   const id = query.id;
 
@@ -37,5 +56,10 @@ module.exports = (req, res) => {
     });
   });
 
-  io.listen(req, res);
-};
+  io.listen(req, res)
+});
+
+//run listen
+app.listen(PORT, () => {
+  console.log(`Server Running on ${process.env.DEV_MODE} mode on port ${PORT}`);
+});
