@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "echochatserver",
+  "name": "echochatio",
   "builds": [
     { "src": "server.js", "use": "@vercel/node" }
   ],
