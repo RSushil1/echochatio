@@ -1,8 +1,13 @@
-const { createServer } = require ("http");
-const { Server } = require ("socket.io");
+const { readFileSync } = require("fs");
+const { createServer } = require("https");
+const { Server } = require("socket.io");
 
-const httpServer = createServer();
-const io = new Server(httpServer, {
+const httpsServer = createServer({
+  key: readFileSync("/path/to/my/key.pem"),
+  cert: readFileSync("/path/to/my/cert.pem")
+});
+
+const io = new Server(httpsServer, {
     cors: {
         origin: "*",
         allowedHeaders: ["my-custom-header"],
